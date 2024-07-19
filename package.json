@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Primer proyecto de la cursada de Backend I de CoderHouse.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,12 @@
     "url": "https://github.com/Pigerwolf/Backend-I/issues"
   },
   "homepage": "https://github.com/Pigerwolf/Backend-I#readme",
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
