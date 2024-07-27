@@ -1,8 +1,5 @@
 import {temprano, tarde, noche} from "./utils/saludos.js"
 
-
-console.log("Trabajando desde la consola o terminal")
-
 // Common
 
 /* const saludos = require("./saludos.js");
