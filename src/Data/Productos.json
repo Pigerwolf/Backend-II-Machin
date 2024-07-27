@@ -1,0 +1,93 @@
+[
+    {
+        
+        "id": 1,
+        "title": "Martillo",
+        "description": "Martillo de 16 oz con mango de madera",
+        "price": 9.99,
+        "img": "https://example.com/martillo.jpg",
+        "code": "FH-001",
+        "stock": 150
+    },
+    {
+        "id": 2,
+        "title": "Destornillador",
+        "description": "Destornillador Phillips de 6 pulgadas",
+        "price": 3.49,
+        "img": "https://example.com/destornillador.jpg",
+        "code": "FH-002",
+        "stock": 300
+    },
+    {
+        "id": 3,
+        "title": "Llave Inglesa",
+        "description": "Llave inglesa ajustable de 12 pulgadas",
+        "price": 14.75,
+        "img": "https://example.com/llave_inglesa.jpg",
+        "code": "FH-003",
+        "stock": 80
+    },
+    {
+        "id": 4,
+        "title": "Taladro Eléctrico",
+        "description": "Taladro eléctrico de 600W con brocas incluidas",
+        "price": 49.99,
+        "img": "https://example.com/taladro_electrico.jpg",
+        "code": "FH-004",
+        "stock": 45
+    },
+    {
+        "id": 5,
+        "title": "Sierra Manual",
+        "description": "Sierra manual de 18 pulgadas para madera",
+        "price": 7.89,
+        "img": "https://example.com/sierra_manual.jpg",
+        "code": "FH-005",
+        "stock": 120
+    },
+    {
+        "id": 6,
+        "title": "Cinta Métrica",
+        "description": "Cinta métrica de 5 metros con carcasa de plástico resistente",
+        "price": 4.99,
+        "img": "https://example.com/cinta_metrica.jpg",
+        "code": "FH-006",
+        "stock": 200
+    },
+    {
+        "id": 7,
+        "title": "Alicate",
+        "description": "Alicate de punta fina de 6 pulgadas con mango antideslizante",
+        "price": 6.49,
+        "img": "https://example.com/alicate.jpg",
+        "code": "FH-007",
+        "stock": 250
+    },
+    {
+        "id": 8,
+        "title": "Llave Allen",
+        "description": "Juego de llaves Allen de 10 piezas con estuche",
+        "price": 8.99,
+        "img": "https://example.com/llave_allen.jpg",
+        "code": "FH-008",
+        "stock": 100
+    },
+    {
+        "id": 9,
+        "title": "Nivel de Burbuja",
+        "description": "Nivel de burbuja de 24 pulgadas con base magnética",
+        "price": 12.50,
+        "img": "https://example.com/nivel_burbuja.jpg",
+        "code": "FH-009",
+        "stock": 75
+    },
+    {
+        "id": 10,
+        "title": "Guantes de Trabajo",
+        "description": "Guantes de trabajo de cuero resistente talla L",
+        "price": 5.99,
+        "img": "https://example.com/guantes_trabajo.jpg",
+        "code": "FH-010",
+        "stock": 180
+    }
+]

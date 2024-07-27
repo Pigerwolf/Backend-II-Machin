@@ -14,13 +14,9 @@ const noche = () => {
 
 }
 
-/* <----------- Common ----------->
+
 module.exports = {
     temprano,
     tarde, 
     noche
 }; 
-   <----------- Common ----------->
-*/
-
-export {temprano, tarde, noche}

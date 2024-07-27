@@ -23,70 +23,42 @@ server.listen(PUERTO, () => {
 
 // `` ALT + 96 */
 
-//De nuevo no me sirvió el Conts required
+const express = require("express"); 
+const productRouter = require("./Managers/product-Manager.js");
+const cartRouter = require("./Managers/cart-Manager.js");
+const ProductManager = require ("./Managers/product-Manager.js")
+const manager = new ProductManager("./src/Data/Productos.json");
+const app = express(); 
+const PUERTO = 8080;
 
-import express from "express"
-const app = express();
-const PUERTO = 8080; 
+//Middleware: 
+app.use(express.json()); 
+//Le decimos al servidor que vamos a trabajar con JSON. 
 
-app.get("/", (req, res) =>{
+app.get("/products", async (req, res) => {
+    const arrayProductos =  await manager.getProducts();
+    res.send(arrayProductos)
 
-    res.send("Sección Home")
 })
 
+app.get("/products/:pid", async (req, res) => {
 
+    let id = req.params.pid;
 
-app.listen(PUERTO, () =>{
+    const producto = await manager.getProductById(parseInt(id));
+    if( !producto ) {
 
-    console.log("Escuchando el puerto de Express")
-
-})
-
-const misProductos = [
-
-    {id: 1, nombre:"Fideos", precio: 2},
-    {id: 2, nombre:"Arroz", precio: 2},
-    {id: 3, nombre:"Pan", precio: 3},
-    {id: 4, nombre:"Leche", precio: 1},
-    {id: 5, nombre:"Queso", precio: 3},
-    {id: 6, nombre:"Mermelada", precio: 1},
-    {id: 7, nombre:"Vino", precio: 4},
-
-]
-
-app.get("/Productos", (req, res) => {
-    res.send({misProductos})
-
+    res.send("No se encontró el producto, todos vamos a explotar.") 
+    }
+    else {
+        res.send({producto})
+    }
 });
 
-//Ruta por ID
+//Rutas
+app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
 
-app.get("/Productos/:id", (req, res) => {
-    //Se envía un request a través de la propiedad Params
-    let {id} = req.params;
-
-    let productoBuscado = misProductos.find(producto => producto.id == id);
-
-    if (productoBuscado) {
-        res.send(productoBuscado)
-    } else {
-        res.send("Producto no encontrado, todo va a explotar.")
-    }
-})
-
-//Query se refiere a múltiples consultas a un endpoint, le tenemos que colocar "?" y el nombre de la consulta
-
-app.get("/clientes", (req, res) =>{
-
-/*  
-    let nombre = req.query.nombre;
-    let apellido = req.query.apellido; 
-                                        */
-
-    let {nombre, apellido} = req.query;
-
-    res.send(`Bienvenido ${nombre} ${apellido}`)
-
-
-
+app.listen(PUERTO, () => {
+    console.log(`Escuchando en el http://localhost:${PUERTO}`); 
 })
