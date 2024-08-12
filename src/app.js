@@ -1,35 +1,46 @@
 // Importar http
 //No me funcionó "const http = require ("http")"
-
 /* import http from "http"
-
 const server = http.createServer( (request, response) => {
     //Función callback (solicitad/recibir)
     //////////////////////////////////////
-
 })
 // Constante del Puerto
-
 const PUERTO = 8080; 
-
 //Parámetro: número de puerto y función callback
 //           o comportamiento a realizar. 
-
 server.listen(PUERTO, () => {
-
     console.log(`Escuchando el puerto ${PUERTO}`);
-
 })
 
 // `` ALT + 96 */
 
+
 const express = require("express"); 
+const exphdbs = require ("express-handlebars");
 const productRouter = require("./Managers/product-Manager.js");
 const cartRouter = require("./Managers/cart-Manager.js");
 const ProductManager = require ("./Managers/product-Manager.js")
 const manager = new ProductManager("./src/Data/Productos.json");
 const app = express(); 
 const PUERTO = 8080;
+
+// Plantilla
+//Reconoce la extensión:
+
+app.engine("handlebars", exphdbs.engine());
+
+//Renderiza através de handlebars:
+
+app.set("view engine", "handlebars")
+
+//Ubicación:
+
+app.set("views", "./srt/views");
+
+
+
+
 
 //Middleware: 
 app.use(express.json()); 
