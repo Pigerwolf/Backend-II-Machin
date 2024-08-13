@@ -36,10 +36,7 @@ app.set("view engine", "handlebars")
 
 //Ubicación:
 
-app.set("views", "./srt/views");
-
-
-
+app.set("views", "./src/views");
 
 
 //Middleware: 
@@ -67,9 +64,16 @@ app.get("/products/:pid", async (req, res) => {
 });
 
 //Rutas
+app.get("/", (req, res) => {
+    res.render("index")
+});
+
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 
+
+//Listen
+
 app.listen(PUERTO, () => {
-    console.log(`Escuchando en el http://localhost:${PUERTO}`); 
+    console.log(`Escuchando en el puerto http://localhost:${PUERTO}/`); 
 })
