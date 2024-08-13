@@ -65,8 +65,23 @@ app.get("/products/:pid", async (req, res) => {
 
 //Rutas
 app.get("/", (req, res) => {
-    res.render("index")
+    const usuario = {
+        nombre: "Pinky",
+        apellido: "Mouse",
+        mayorEdad: false
+    }
+    res.render("index", {usuario})
 });
+
+app.get("/tienda", (req, res) => {
+    res.render("tienda");
+
+})
+
+app.get("/contacto", (req, res) => {
+    res.render("contacto");
+
+})
 
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);

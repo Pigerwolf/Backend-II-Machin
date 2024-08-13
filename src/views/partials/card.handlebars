@@ -1,0 +1,9 @@
+{{!-- Ciclo for each --}}
+{{#each Productos.json}}
+    <div>
+        <h2>Nombre:{{this.title}}</h2>
+            <p>Descripción: {{this.description}}</p>
+            <p>id: {{this.id}} </p>
+            <p>code: {{this.code}} </p>
+    </div>
+{{/each}}
