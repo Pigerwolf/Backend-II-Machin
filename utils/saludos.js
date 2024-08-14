@@ -14,9 +14,10 @@ const noche = () => {
 
 }
 
-
 module.exports = {
+
     temprano,
     tarde, 
     noche
+
 }; 

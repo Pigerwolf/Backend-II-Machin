@@ -1,9 +1,12 @@
-{{!-- Ciclo for each --}}
-{{#each Productos.json}}
-    <div>
-        <h2>Nombre:{{this.title}}</h2>
-            <p>Descripción: {{this.description}}</p>
-            <p>id: {{this.id}} </p>
-            <p>code: {{this.code}} </p>
-    </div>
+{{!-- Ejemplo de Ciclos --}}
+
+{{#each arrayProductos}}
+<div>
+
+    <h2>Titulo: {{this.tittle}} </h2>
+    <p>Descipción: {{this.description}} </p>
+    <p>Precio: {{this.price}} </p>
+
+</div>
+
 {{/each}}

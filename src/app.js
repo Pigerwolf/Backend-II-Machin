@@ -1,5 +1,5 @@
 // Importar http
-//No me funcionó "const http = require ("http")"
+//~~ No me funcionó "const http = require ("http")"
 /* import http from "http"
 const server = http.createServer( (request, response) => {
     //Función callback (solicitad/recibir)
@@ -18,14 +18,12 @@ server.listen(PUERTO, () => {
 
 const express = require("express"); 
 const exphdbs = require ("express-handlebars");
-const productRouter = require("./Managers/product-Manager.js");
 const cartRouter = require("./Managers/cart-Manager.js");
-const ProductManager = require ("./Managers/product-Manager.js")
-const manager = new ProductManager("./src/Data/Productos.json");
 const app = express(); 
 const PUERTO = 8080;
+const viewsRouter = require ("./routes/views.router.js")
+const arrayProductos = ("src/Data/Productos.json")
 
-// Plantilla
 //Reconoce la extensión:
 
 app.engine("handlebars", exphdbs.engine());
@@ -38,9 +36,11 @@ app.set("view engine", "handlebars")
 
 app.set("views", "./src/views");
 
-
 //Middleware: 
+
 app.use(express.json()); 
+
+
 //Le decimos al servidor que vamos a trabajar con JSON. 
 
 app.get("/products", async (req, res) => {
@@ -64,31 +64,12 @@ app.get("/products/:pid", async (req, res) => {
 });
 
 //Rutas
-app.get("/", (req, res) => {
-    const usuario = {
-        nombre: "Pinky",
-        apellido: "Mouse",
-        mayorEdad: false
-    }
-    res.render("index", {usuario})
-});
 
-app.get("/tienda", (req, res) => {
-    res.render("tienda");
-
-})
-
-app.get("/contacto", (req, res) => {
-    res.render("contacto");
-
-})
-
-app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
-
-
+app.use ("/", viewsRouter);
 //Listen
 
 app.listen(PUERTO, () => {
     console.log(`Escuchando en el puerto http://localhost:${PUERTO}/`); 
 })
+
+app.use(express.static("./src/public"));
