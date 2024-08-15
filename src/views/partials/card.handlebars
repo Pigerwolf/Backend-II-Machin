@@ -1,12 +1,10 @@
 {{!-- Ejemplo de Ciclos --}}
 
-{{#each arrayProductos}}
-<div>
-
-    <h2>Titulo: {{this.tittle}} </h2>
-    <p>Descipción: {{this.description}} </p>
-    <p>Precio: {{this.price}} </p>
-
-</div>
-
-{{/each}}
+    {{#each productos}}
+    <div class="card">
+        <p>{{this.title}}</p>
+        <p> {{this.price}}</p>
+        <p> {{this.description}}</p>
+        <button>Comprar</button>
+    </div>
+    {{/each}}

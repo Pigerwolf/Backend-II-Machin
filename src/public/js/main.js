@@ -1,4 +1,4 @@
-console.log("Hola...... Perro.")
+console.log("Conectadísimo!")
 
 // Instancia Socket.io
 
@@ -6,22 +6,22 @@ const socket = io();
 
 // Emit y On 
 
-socket.emit(`mensaje`, `esto es un emit desde el Cliente`);
-
+/* socket.emit(`mensaje`, `esto es un emit desde el Cliente`);
+ */
 //Recibir mensaje del Backend
 
-socket.on("Saludito", (data) => {
+/* socket.on("Saludito", (data) => {
     console.log(data)
 })
-
+ */
 
 //Recibir el Array de usuarios
 
-socket.on("usuarios", (data) => {
-    const listaUsuarios = document.getElementById("lista-usuarios")
+socket.on("productos", (data) => {
+    const listaProductos = document.getElementById("contenedor-Productos")
 
-    data.forEach(usuarios => {
-        listaUsuarios.innerHTML += `<li> ${usuarios.name} - ${usuarios.lastName} </li>`
+    data.forEach(productos => {
+        listaUsuarios.innerHTML += `<li> ${productos.tittle} - ${productos.description} - ${productos.price} </li>`
     })
 
 }) 

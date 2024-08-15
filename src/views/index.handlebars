@@ -1,24 +1,12 @@
-<h2>Bienvenidos a Express-Handlebars</h2>
+<h2>Bienvenidos!</h2>
 
-<p>WebSocket testing</p>
+<h2>Ferretería</h2>
 
-<h2>Lista de Usuarios de la Familia Doe</h2>
-<ul id="lista-usuarios"></ul>
-{{!-- Condicionales --}}
+<h2>Lista de Productos:</h2>
 
-{{!-- {{#if usuario.mayorEdad}}
-<p>Es mayor de edad</p>
-
-{{else}}
-<p>Es menor de edad</p>
-{{/if}}
-
- --}}
-
-
-{{!-- Llamar partials --}}
-
-{{>card}}
+<div class="contenedor-productos">
+    {{>card}}
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
 <script src="js/main.js"></script>

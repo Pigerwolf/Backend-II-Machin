@@ -1,5 +1,5 @@
 const express = require("express");
-const ProductManager = require("../Managers/product-Manager");
+const ProductManager = require("../managers/product-manager");
 const manager = new ProductManager("./src/data/productos.json");
 const router = express.Router();
 
@@ -25,12 +25,12 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     let id = req.params.pid;
     try {
-        const producto = await manager.getProductById(parseInt(id));
+        const productos = await manager.getProductById(parseInt(id));
 
-        if (!producto) {
+        if (!productos) {
             res.send("Producto no encontrado");
         } else {
-            res.send(producto);
+            res.send(productos);
         }
     } catch (error) {
         res.send("Error al buscar ese id en los productos");

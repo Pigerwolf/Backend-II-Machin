@@ -1,20 +1,16 @@
-//Metodo para crear
-const { Router } = require("express");
+const express = require("express");
+const router = express.Router();
+const ProductManager = require ("../managers/product-manager.js");
+const manager = new ProductManager ("./src/data/productos.json");
 
-const router = Router();
-// Rutas
+router.get("/", (req, res) =>{
+    res.render("index")
+})
 
-router.get("/tienda", (req, res) => {
-    res.render("tienda");
-});
+router.get("/products", async (req, res) => {
+    const productos = await manager.getProducts();
 
-router.get("/contacto", (req, res) => {
-    res.render("contacto");
-});
+    res.render("index", {productos})
+})
 
-router.get("/", (req, res) => {
-    res.render("index");
-});
-
-//Metodo para exportar
 module.exports = router;
