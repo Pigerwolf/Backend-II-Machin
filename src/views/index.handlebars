@@ -1,8 +1,9 @@
 <h2>Bienvenidos a Express-Handlebars</h2>
 
-<p>info del p1</p>
-<p>info del p2  </p>
+<p>WebSocket testing</p>
 
+<h2>Lista de Usuarios de la Familia Doe</h2>
+<ul id="lista-usuarios"></ul>
 {{!-- Condicionales --}}
 
 {{!-- {{#if usuario.mayorEdad}}
@@ -14,7 +15,10 @@
 
  --}}
 
- 
+
 {{!-- Llamar partials --}}
 
 {{>card}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<script src="js/main.js"></script>

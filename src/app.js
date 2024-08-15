@@ -26,6 +26,22 @@ const arrayProductos = ("src/Data/Productos.json")
 const {engine} = require ("express-handlebars");
 
 
+//Array de Usuarios
+
+const usuarios = [
+
+    { id: 1, name: 'John', lastName: 'Doe' },
+  
+    { id: 2, name: 'Jane', lastName: 'Doe' },
+  
+    { id: 3, name: 'Juan', lastName: 'Doe' },
+  
+    {id: 4, name: 'Julia', lastName: 'Doe' },
+  
+    {id: 5, name: 'Jose', lastName: 'Doe' },
+  
+  ]
+
 //Reconoce la extensión:
 
 app.engine("handlebars", exphdbs.engine());
@@ -78,7 +94,35 @@ app.get("/", (req, res) => {
 })
 //Listen
 
-app.listen(PUERTO, () => {
+// Referencia del Server ⬇ ⬇ ⬇ ⬇ 
+
+const httpServer = app.listen(PUERTO, () => {
     console.log(`Escuchando en el puerto http://localhost:${PUERTO}/`); 
 })
 
+// Socket.io 
+
+const Server = require("socket.io");
+
+// Instancia WebSocket
+
+const io = Server (httpServer);
+
+//Instancia desde el Backend
+
+io.on(`connection`, (socket) => {
+
+/*     console.log("Un cliente conectó") */
+
+    socket.on(`mensaje`, (data) => {
+        console.log(data);
+    })
+
+//Respuesta del Backend
+    socket.emit("Saludito", "Hola Cliente, esto es el Backend respondiendo.");
+
+//Enviar el array de Usuarios
+
+    socket.emit("usuarios", usuarios);
+
+});
