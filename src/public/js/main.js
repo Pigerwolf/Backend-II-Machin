@@ -15,7 +15,7 @@ const socket = io();
 })
  */
 
-//Recibir el Array de usuarios
+//Recibir el Array de Productos
 
 socket.on("productos", (data) => {
     const listaProductos = document.getElementById("contenedor-Productos")
@@ -24,4 +24,4 @@ socket.on("productos", (data) => {
         listaUsuarios.innerHTML += `<li> ${productos.tittle} - ${productos.description} - ${productos.price} </li>`
     })
 
-}) 
+});
