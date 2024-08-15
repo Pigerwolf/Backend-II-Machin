@@ -89,5 +89,95 @@
         "img": "https://example.com/guantes_trabajo.jpg",
         "code": "FH-010",
         "stock": 180
+    },
+    {
+        "id": 11,
+        "title": "Taladro Inalámbrico",
+        "description": "Taladro inalámbrico con batería de 18V",
+        "price": 59.99,
+        "img": "https://example.com/taladro_inalambrico.jpg",
+        "code": "TD-011",
+        "stock": 75
+    },
+    {
+        "id": 12,
+        "title": "Cinta Métrica",
+        "description": "Cinta métrica de 5 metros con bloqueo automático",
+        "price": 3.50,
+        "img": "https://example.com/cinta_metrica.jpg",
+        "code": "CM-012",
+        "stock": 200
+    },
+    {
+        "id": 13,
+        "title": "Destornillador Eléctrico",
+        "description": "Destornillador eléctrico recargable con luz LED",
+        "price": 25.00,
+        "img": "https://example.com/destornillador_electrico.jpg",
+        "code": "DE-013",
+        "stock": 150
+    },
+    {
+        "id": 14,
+        "title": "Sierra Circular",
+        "description": "Sierra circular de 1400W con disco de 24 dientes",
+        "price": 75.50,
+        "img": "https://example.com/sierra_circular.jpg",
+        "code": "SC-014",
+        "stock": 40
+    },
+    {
+        "id": 15,
+        "title": "Lijadora Orbital",
+        "description": "Lijadora orbital de 240W con sistema de aspiración",
+        "price": 45.99,
+        "img": "https://example.com/lijadora_orbital.jpg",
+        "code": "LO-015",
+        "stock": 85
+    },
+    {
+        "id": 16,
+        "title": "Martillo de Garra",
+        "description": "Martillo de garra de acero con mango de fibra de vidrio",
+        "price": 9.99,
+        "img": "https://example.com/martillo_garra.jpg",
+        "code": "MG-016",
+        "stock": 120
+    },
+    {
+        "id": 17,
+        "title": "Llave Inglesa",
+        "description": "Llave inglesa ajustable de 12 pulgadas",
+        "price": 12.50,
+        "img": "https://example.com/llave_inglesa.jpg",
+        "code": "LI-017",
+        "stock": 130
+    },
+    {
+        "id": 18,
+        "title": "Juego de Llaves Allen",
+        "description": "Juego de 9 llaves Allen de acero cromado",
+        "price": 6.99,
+        "img": "https://example.com/juego_llaves_allen.jpg",
+        "code": "JA-018",
+        "stock": 210
+    },
+    {
+        "id": 19,
+        "title": "Nivel de Burbuja",
+        "description": "Nivel de burbuja de 60 cm con 3 burbujas",
+        "price": 8.75,
+        "img": "https://example.com/nivel_burbuja.jpg",
+        "code": "NB-019",
+        "stock": 95
+    },
+    {
+        "id": 20,
+        "title": "Cortadora de Azulejos",
+        "description": "Cortadora de azulejos manual de 600 mm",
+        "price": 45.00,
+        "img": "https://example.com/cortadora_azulejos.jpg",
+        "code": "CA-020",
+        "stock": 60
     }
 ]
