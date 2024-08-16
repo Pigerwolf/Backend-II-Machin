@@ -2,3 +2,21 @@ h2 {
     color: red;
     text-align: center;
 }
+
+.contenedor-productos {
+
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+
+}
+
+.card {
+
+    margin: 30px 20px 20px 50px;
+    max-width: 250px;
+    align-items: center;
+    padding: 15px;
+
+}

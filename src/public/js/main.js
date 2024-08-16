@@ -21,7 +21,7 @@ socket.on("productos", (data) => {
     const listaProductos = document.getElementById("contenedor-Productos")
 
     data.forEach(productos => {
-        listaUsuarios.innerHTML += `<li> ${productos.tittle} - ${productos.description} - ${productos.price} </li>`
+        listaUsuarios.innerHTML += `<li> ${productos.tittle} - ${productos.description} - ${productos.price} - ${productos.img} </li>`
     })
 
 });
