@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const CartManager = require("../managers/cart-manager");
-const cartManager = new CartManager("./src/data/carts.json");
+
+const CartManager = require("../dao/db/cart-manager-db");
+const cartManager = new CartManager();
 
 //1) Creamos un nuevo carrito: 
 
@@ -17,7 +18,7 @@ router.post("/", async (req, res) => {
 //2) La ruta GET /:cid deberá listar los productos que pertenezcan al carrito con el parámetro cid proporcionados.
 
 router.get("/:cid", async (req, res) => {
-    const carritoID = parseInt(req.params.cid);
+    const carritoID = (req.params.cid);
 
     try {
         const carritoBuscado = await cartManager.getCarritoById(carritoID);
@@ -30,7 +31,7 @@ router.get("/:cid", async (req, res) => {
 //3) Agregar productos a distintos carritos: 
 
 router.post("/:cid/product/:pid", async (req, res) => {
-    const carritoId = parseInt(req.params.cid);
+    const carritoId = (req.params.cid);
     const productoId = req.params.pid;
     const quantity = req.body.quantity || 1;
 

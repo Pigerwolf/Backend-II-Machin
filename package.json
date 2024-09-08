@@ -2,7 +2,7 @@
   "name": "project-backend-i",
   "version": "1.0.0",
   "description": "Primer proyecto de la cursada de Backend I de CoderHouse.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "nodemon src/app.js"
   },
@@ -20,7 +20,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "express-handlebars": "^7.1.3",
-    "mongoose": "^8.5.1",
+    "mongoose": "^8.6.1",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {

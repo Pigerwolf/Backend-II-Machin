@@ -1,7 +1,7 @@
 const express = require("express");
-const ProductManager = require("../managers/product-manager");
-const manager = new ProductManager("./src/data/productos.json");
 const router = express.Router();
+const ProductManager = require("../dao/db/product-manager-db");
+const manager = new ProductManager();
 
 //Listar todos los productos: 
 //http://localhost:8080/api/products?limit=2
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     let id = req.params.pid;
     try {
-        const productos = await manager.getProductById(parseInt(id));
+        const productos = await manager.getProductById(id);
 
         if (!productos) {
             res.send("Producto no encontrado");
@@ -51,5 +51,41 @@ router.post("/", async (req, res) => {
         res.status(500).json({status: "error", message: error.message});
     }
 })
+
+    //Actualizar por ID
+
+router.put("/pid", async (req, res) => {
+    const productoActualizado = req.body;
+    const id = req.params.pid;
+
+    try {
+        await manager.updateProduct(id, productoActualizado);
+        res.jason({
+            message: "Producto Actualizado"
+        });
+        }
+        catch(error){
+            res.status(500).json({error: "Error interno del servidor"})
+        }
+});
+
+    //Elimninar
+
+    router.delete("/pid", async (req, res) => {
+        const productoEliminado = req.body;
+        const id = req.params.pid;
+    
+        try {
+            await manager.deleteProduct(id, productoEliminado);
+            res.jason({
+                message: "Producto Eliminado"
+            });
+            }
+            catch(error){
+                res.status(500).json({error: "Error interno del servidor"})
+            }
+    });
+    
+    
 
 module.exports = router; 

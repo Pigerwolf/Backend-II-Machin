@@ -3,7 +3,7 @@ h2 {
     text-align: center;
 }
 
-.contenedor-productos {
+.contenedorProductos {
 
     display: grid;
     max-width: 100%;
@@ -14,9 +14,50 @@ h2 {
 
 .card {
 
-    margin: 30px 20px 20px 50px;
+    margin: 30px 40px 20px 50px;
     max-width: 250px;
     align-items: center;
     padding: 15px;
+
+}
+
+.formAddProducto {
+
+    display: flex;
+
+
+}
+
+#formProducto {
+
+    margin: 0 auto;
+    padding: 20px;
+    width: 60%;
+    height: 120px;
+    border: solid black 1px;
+    gap: 9px;
+
+}
+
+#formProducto button {
+
+    position: right;
+    color: white;
+    padding: 5px;
+    margin-top: 15px;
+    margin-left: 54%;
+    background-color: green;
+    align-content: right;
+    align-items: end;
+    position: sticky;
+
+}
+
+.fatherProducto {
+
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
 
 }

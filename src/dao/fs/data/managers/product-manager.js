@@ -19,7 +19,7 @@ class ProductManager {
         }
     }
 
-    async addProduct({ title, description, price, img, code, stock }) {
+    async crearProducto({ title, description, price, img, code, stock }) {
 
         if (!title || !description || !price || !img || !code || !stock) {
             console.log("Todos los campos son obligatorios");
@@ -91,7 +91,7 @@ class ProductManager {
 
     //Método para actualizar productos: 
 
-    async updateProduct(id, productoActualizado) {
+    async actualizarProducto(id, productoActualizado) {
         try {
             const arrayProductos = await this.leerArchivo(); 
 
@@ -109,7 +109,7 @@ class ProductManager {
         }
     }
 
-    async deleteProduct(id) {
+    async eliminarProducto(id) {
         try {
             const arrayProductos = await this.leerArchivo(); 
 

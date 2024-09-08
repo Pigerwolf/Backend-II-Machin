@@ -1,27 +1,53 @@
-console.log("Conectadísimo!")
-
 // Instancia Socket.io
+const socket = io(); 
 
-const socket = io();
-
-// Emit y On 
-
-/* socket.emit(`mensaje`, `esto es un emit desde el Cliente`);
- */
-//Recibir mensaje del Backend
-
-/* socket.on("Saludito", (data) => {
-    console.log(data)
-})
- */
-
-//Recibir el Array de Productos
+//Listener
 
 socket.on("productos", (data) => {
-    const listaProductos = document.getElementById("contenedor-Productos")
+    //console.log(data);
+    renderProductos(data); 
+})
 
-    data.forEach(productos => {
-        listaUsuarios.innerHTML += `<li> ${productos.tittle} - ${productos.description} - ${productos.price} - ${productos.img} </li>`
+//ID: contenedorProductos
+
+const renderProductos = (productos) => {
+    const constenedorProductos = document.getElementById("contenedorProductos"); 
+    constenedorProductos.innerHTML = ""; 
+
+    productos.forEach(item => {
+        const card = document.createElement("div"); 
+        card.innerHTML = `  <p> ${item.id} </p>
+                            <p> ${item.title} </p>
+                            <p> ${item.price} </p>
+                            <button> Eliminar </button>
+                            `
+        constenedorProductos.appendChild(card); 
+
+        //Función Eliminar
+        card.querySelector("button").addEventListener("click", () => {
+            eliminarProducto(item.id); 
+            
+        })
     })
+}
 
-});
+const eliminarProducto = (id) => {
+    socket.emit("eliminarProducto", id); 
+        
+    document.getElementById('formProducto').addEventListener('submit', (e) => {
+        e.preventDefault();
+    
+        const id = document.getElementById('productoId').value;
+        const title = document.getElementById('productoTitle').value;
+        const price = parseFloat(document.getElementById('productoPrice').value);
+    
+        // Crear objeto del producto
+        const producto = { id, title, price };
+    
+        // Emitir el evento para guardar el producto
+        socket.emit('guardarProducto', producto);
+    
+        // Limpiar el formulario
+        document.getElementById('formProducto').reset();
+    });
+}
