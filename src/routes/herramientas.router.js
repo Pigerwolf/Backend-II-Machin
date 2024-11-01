@@ -1,7 +1,7 @@
 const Router = require("express");
 const router = Router();
 
-const HerramientaModel = require ("../models/herramientas.model")
+const HerramientaModel = require ("../dao/models/herramientas.model")
 
 // Postman CRUD
 
