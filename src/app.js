@@ -4,12 +4,14 @@ const exphdbs = require ("express-handlebars");
 const { mongoose } = require ("mongoose");
 const {engine} = require ("express-handlebars");
 const viewsRouter = require ("./routes/views.router.js");
+const sessionRouter = require("../src/routes/session.router.js");
 const app = express(); 
 const cookieParser = require ("cookie-parser");
 const cartRouter = require("./dao/db/cart-manager-db.js");
 const ProductManager = require("../src/dao/db/product-manager-db.js");
 const herramientasRouter = require ("./dao/models/herramientas.model.js");
 const manager = new ProductManager;
+const MongoStore = require ("connect-mongo")
 const session = require ("express-session");
 require ("./database.js");
 
@@ -71,6 +73,7 @@ app.set("view engine", "handlebars")
 
 app.set("views", "./src/views"); 
 
+
 //Middleware: 
 
 function auth(req, res, next){
@@ -79,8 +82,37 @@ function auth(req, res, next){
     }
     return res.status(401).send("Error");
 }
+//Middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser()); 
+app.use(session({
+    //1) Creamos una sesion con Memory Storage: 
+    secret: "secretCoder", 
+    //Es el valor para firmar la cookie. 
 
-// SESSIONS
+    resave: true, 
+    //Esto me permite mantener la sesion activa frente a la inactividad del usuario. 
+
+    saveUninitialized: true,
+    //Me permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada para contener. 
+
+    //2) Utilizando File Storage: 
+    //store: new fileStore({path: "./src/sessions", ttl: 5, retries: 2})
+    //Path: la ruta donde se van a guardar los archivitos de session. 
+    //ttl: Time To Live! (en segunda va este!)
+    //retries: cantidad de veces que el servidor tratara de leer el archivo. 
+
+    //3) Utilizando Mongo Storage: 
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://EuCortex:backend1@clustor0.n8cvr.mongodb.net/TryOne?retryWrites=true&w=majority&appName=Clustor0", ttl: 100
+    })
+}))
+/* //Register
+
+app.use("/api/sessions/register", sessionsRouter); */
+
+/* // SESSIONS
 app.use(session({
     secret: "secretCoder",
     resave: true,
@@ -118,7 +150,7 @@ app.get("/login", (req, res) => {
 
 })
 
-//Rura para gente logeada
+//Ruta para gente logeada
 
 app.get("/privado", auth, (req, res) => {
     res.send("Si estás aquí, te loggeaste correctamente.")
@@ -132,9 +164,10 @@ app.get("/logout", (req, res) => {
         if(!error) res.send("Sessión Cerrada")
             else res.send({status: "error", body: error})
     })
-});
+}); */
 
 app.use(express.json()); 
+app.use('/api/sessions', sessionRouter);
 app.use(express.static("./src/public"))
 app.use(express.urlencoded({extended:true}));
 
@@ -143,6 +176,10 @@ app.use("/herramientas", herramientasRouter)
 app.use("/api/products", ProductManager)
 app.use("/api/carts", cartRouter)
 app.use("/",  viewsRouter);
+
+app.use("/api/sessions/register", sessionRouter);
+
+//MongoStore
 
 
 // Referencia del Server ⬇ ⬇ ⬇ ⬇ 

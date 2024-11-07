@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Pigerwolf/Backend-I#readme",
   "keywords": [],
   "dependencies": {
+    "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.7",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.3",
