@@ -11,6 +11,8 @@ const cartRouter = require("./dao/db/cart-manager-db.js");
 const ProductManager = require("../src/dao/db/product-manager-db.js");
 const herramientasRouter = require ("./dao/models/herramientas.model.js");
 const manager = new ProductManager;
+const passport = require ("passport")
+const { initializePassport } = require ("./config/passport.config.js")
 const MongoStore = require ("connect-mongo")
 const session = require ("express-session");
 require ("./database.js");
@@ -168,8 +170,16 @@ app.get("/logout", (req, res) => {
 
 app.use(express.json()); 
 app.use('/api/sessions', sessionRouter);
+app.use("/api/sessions/register", sessionRouter);
+app.post("/api/sessions/login", sessionRouter);
 app.use(express.static("./src/public"))
 app.use(express.urlencoded({extended:true}));
+
+//Passport 
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Rutas
 app.use("/herramientas", herramientasRouter)
@@ -177,10 +187,7 @@ app.use("/api/products", ProductManager)
 app.use("/api/carts", cartRouter)
 app.use("/",  viewsRouter);
 
-app.use("/api/sessions/register", sessionRouter);
-
 //MongoStore
-
 
 // Referencia del Server ⬇ ⬇ ⬇ ⬇ 
 

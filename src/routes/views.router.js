@@ -19,16 +19,25 @@ router.get("/realtimeproducts", (req, res) => {
 })
 
 router.get("/register", (req, res) => {
-    res.render("register");
+    if(req.session.login) {
+        return res.redirect("/profile"); 
+    }
+    res.render("registro");
 })
 
+
 router.get("/login", (req, res) => {
+    if(req.session.login) {
+        return res.redirect("/profile"); 
+    }
     res.render("login");
 })
 
 router.get("/profile", (req, res) => {
-    res.render("profile");
+    if(!req.session.login) {
+        return res.redirect("/login"); 
+    }
+    res.render("profile", {user: req.session.user});
 })
-
 
 module.exports = router;
