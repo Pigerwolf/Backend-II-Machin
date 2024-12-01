@@ -1,7 +1,7 @@
 const Router = require("express");
 const router = Router();
-const UserModel = require ("../model/users.model");
-const {createHash, isValidPassword} = require ("../utils/util");
+const UserModel = require("../model/users.model");
+const { createHash, isValidPassword } = require("../utils/util");
 const passport = require("passport");
 
 /* router.post('/register', async (req, res) => {
@@ -84,49 +84,57 @@ router.get("/logout", (req, res) =>{
 
 //Versión Passport
 
-router.post("/register", passport.authenticate("register", {failureRedirect:"/api/sessions/failedregister"})  ,async(req, res) => {
+router.post(
+  "/register",
+  passport.authenticate("register", {
+    failureRedirect: "/api/sessions/failedregister",
+  }),
+  async (req, res) => {
     req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        age: req.user.age, 
-        email: req.user.email
-    }
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      age: req.user.age,
+      email: req.user.email,
+    };
 
     req.session.login = true;
     res.redirect("/profile");
-})
+  }
+);
 
 router.get("/failedregister", (req, res) => {
-    res.send("Registro fallido");
-})
+  res.send("El registro ha fallado, ¡va explortar tu computador!");
+});
 
-router.post("/login", passport.authenticate("login", {failureRedirect: "/api/sessions/faillogin"}) ,async (req, res) => {
+router.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/api/sessions/faillogin",
+  }),
+  async (req, res) => {
     req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        age: req.user.age, 
-        email: req.user.email
-    }
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      age: req.user.age,
+      email: req.user.email,
+    };
 
     req.session.login = true;
     res.redirect("/profile");
-})
+  }
+);
 
 router.get("/faillogin", async (req, res) => {
-    res.send("Error al iniciar sesión, todos vamos a explotar! ¡Huyan!");
-})
+  res.send("Error al iniciar sesión, todos vamos a explotar! ¡Huyan!");
+});
 
-
-
-//Logout 
+//Logout
 
 router.get("/logout", (req, res) => {
-    if(req.session.login) {
-        req.session.destroy(); 
-    }
-    res.redirect("/login"); 
-})
-
+  if (req.session.login) {
+    req.session.destroy();
+  }
+  res.redirect("/login");
+});
 
 module.exports = router;
-
