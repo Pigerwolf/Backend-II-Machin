@@ -3,7 +3,7 @@ const router = express.Router();
 const CartManager = require("../dao/db/cart-manager-db");
 const cartManager = new CartManager();
 
-//1) Creamos un nuevo carrito: 
+//1) Creamos un nuevo carrito
 
 router.post("/", async (req, res) => {
     try {
@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-//2) La ruta GET /:cid deberá listar los productos que pertenezcan al carrito con el parámetro cid proporcionados.
+//2) La ruta GET /:cid deberá listar los productos que pertenezcan al carrito con el parámetro cid proporcionados
 
 router.get("/:cid", async (req, res) => {
     const carritoID = (req.params.cid);
@@ -27,7 +27,7 @@ router.get("/:cid", async (req, res) => {
     }
 })
 
-//3) Agregar productos a distintos carritos: 
+//3) Agregar productos a distintos carritos
 
 router.post("/:cid/product/:pid", async (req, res) => {
     const carritoId = (req.params.cid);

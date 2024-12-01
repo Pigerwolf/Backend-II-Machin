@@ -1,53 +1,24 @@
-// Instancia Socket.io
-const socket = io(); 
+const formulario = document.getElementById("loginForm");
 
-//Listener
+formulario.addEventListener("submit", () => {
 
-socket.on("productos", (data) => {
-    //console.log(data);
-    renderProductos(data); 
-})
+    let usuario = document.getElementById("usuario").value;
+    let pass = document.getElementById("pass").value; 
 
-//ID: contenedorProductos
+    let obj = {usuario, pass}; 
 
-const renderProductos = (productos) => {
-    const constenedorProductos = document.getElementById("contenedorProductos"); 
-    constenedorProductos.innerHTML = ""; 
-
-    productos.forEach(item => {
-        const card = document.createElement("div"); 
-        card.innerHTML = `  <p> ${item.id} </p>
-                            <p> ${item.title} </p>
-                            <p> ${item.price} </p>
-                            <button> Eliminar </button>
-                            `
-        constenedorProductos.appendChild(card); 
-
-        //Función Eliminar
-        card.querySelector("button").addEventListener("click", () => {
-            eliminarProducto(item.id); 
-            
-        })
+    fetch("/login", {
+        method:"POST",
+        body: JSON.stringify(obj), 
+        headers: {
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+        }
     })
-}
+    .then(result => result.json()) 
+    .then(json => {
+        localStorage.setItem("authToken", json.token);
+    })
 
-const eliminarProducto = (id) => {
-    socket.emit("eliminarProducto", id); 
-        
-    document.getElementById('formProducto').addEventListener('submit', (e) => {
-        e.preventDefault();
-    
-        const id = document.getElementById('productoId').value;
-        const title = document.getElementById('productoTitle').value;
-        const price = parseFloat(document.getElementById('productoPrice').value);
-    
-        // Crear objeto del producto
-        const producto = { id, title, price };
-    
-        // Emitir el evento para guardar el producto
-        socket.emit('guardarProducto', producto);
-    
-        // Limpiar el formulario
-        document.getElementById('formProducto').reset();
-    });
-}
+    //Si los datos que le envio al servidor son correctos, este me contesta con el token
+})

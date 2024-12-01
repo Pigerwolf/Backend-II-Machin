@@ -1,26 +1,11 @@
-<h2>Registro de Usuarios</h2>
+<h1> Registro de Usuario </h1>
 
 <form action="/api/sessions/register" method="POST">
-    <label for="first_name">Nombre</label>
-    <input type="text" name="first_name">
+    <label for="usuario"> Nombre de usuario: </label>
+    <input type="text" name="usuario">
     <br><br>
- 
-    <label for="last_name">Apellido</label>
-    <input type="text" name="last_name">
+    <label for="password"> Contraseña:  </label>
+    <input type="text" name="password">
     <br><br>
-
-    <label for="email">Email</label>
-    <input type="email" name="email">
-    <br><br>
-
-    <label for="password">Contraseña</label>
-    <input type="password" name="password">
-    <br><br>
-
-    <label for="age">Edad</label>
-    <input type="number" name="age">
-    <br><br>
-
-    <button type="submit">Registrar</button>
-
+    <button type="submit"> Registrarse </button>
 </form>
