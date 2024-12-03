@@ -2,103 +2,152 @@ const { Router } = require("express");
 const router = Router();
 const jsonwebtoken = require("jsonwebtoken");
 const passport = require("passport");
-const UserModel = require ("../model/users.model")
-const { createHash, isValidPassword } = require ("../utils/util")
+const UserModel = require("../model/users.model");
+const { createHash, isValidPassword } = require("../utils/util");
 
-//Register
 router.post("/register", async (req, res) => {
-    const {usuario, password} = req.body; 
+  const { usuario, password } = req.body;
 
-    try {
-        //Verificamos si ya existe el usuario. 
-        const existeUsuario = await UserModel.findOne({ usuario }); 
+  try {
+    console.log("Datos del registro:", { usuario, password });
 
-        if (existeUsuario) {
-            return res.status(400).send("El usuario ya existe en nuestra base de datos"); 
-        }
+    // Verificamos si el usuario ya existe
 
-        //Si no existe, lo puedo crear: 
-        const nuevoUsuario = new UserModel({
-            usuario, 
-            password: createHash(password) 
-        }); 
+    const existeUsuario = await UserModel.findOne({ usuario });
+    console.log("Existe el usuario?", !!existeUsuario);
 
-        await nuevoUsuario.save(); 
-
-        //Generar el Token JWT
-        const token = jwt.sign({usuario: nuevoUsuario.usuario}, "coderhouse", {expiresIn: "1h"}); 
-
-        //Lo mandamos con la cookie. 
-
-        res.cookie("coderCookieToken", token, {
-            maxAge: 3600000, 
-            httpOnly: true
-        })
-
-        res.redirect("/api/sessions/current"); 
-
-    } catch (error) {
-        res.status(500).send("Error interno del servidor"); 
+    if (existeUsuario) {
+      return res
+        .status(400)
+        .send("El usuario ya existe en la base de datos");
     }
-})
 
+    // Nuevo Usuario
 
-//Login
+    const nuevoUsuario = new UserModel({
+      usuario,
+      password: createHash(password),
+    });
+    console.log("Nuevo usuario creado con exito:", nuevoUsuario);
+
+    await nuevoUsuario.save();
+    console.log("Usuario guardado en la base de datos");
+
+    // Generamos el Token JWT
+    const token = jsonwebtoken.sign(
+      { usuario: nuevoUsuario.usuario },
+      "coderhouse",
+      { expiresIn: "1h" }
+    );
+    console.log("Token generado:", token);
+
+    // Enviamos el token como cookie
+    res.cookie("coderCookieToken", token, {
+      maxAge: 3600000,
+      httpOnly: true,
+    });
+    console.log("Cookie enviada");
+
+    // Si responde con éxito
+    res.status(201).send("Usuario registrado exitosamente! Por fin!!!");
+  } catch (error) {
+    console.error("Fallo al intentar registrar a:", error);
+    res.status(500).send("Error interno del servidor");
+  }
+});
 
 router.post("/login", async (req, res) => {
-    const {usuario, password} = req.body; 
+  const { usuario, password } = req.body;
 
-    try {
-        //Buscamos al usuario en MongoDB: 
-        const usuarioEncontrado = await UserModel.findOne({usuario}); 
+  try {
+    console.log("Login con el usuario:", { usuario, password });
 
-        //Si no lo encuentro, lo puedo mandar a registrarse: 
-        if (!usuarioEncontrado) {
-            return res.status(401).send("Usuario no registrado, date una vuelta por el registro"); 
-        }
-
-        //Verificamos la contraseña: 
-        if(!isValidPassword(password, usuarioEncontrado)) {
-            return res.status(401).send("Contraseña incorrecta"); 
-        }
-
-        //Generamos el token JWT: 
-        
-        const token = jwt.sign({usuario: usuarioEncontrado.usuario, rol: usuarioEncontrado.rol}, "coderhouse", {expiresIn: "1h"});
-
-        //Enviamos con la cookie: 
-
-        res.cookie("coderCookieToken", token, {
-            maxAge: 3600000, 
-            httpOnly: true
-        })
-
-        res.redirect("/api/sessions/current"); 
-    } catch (error) {
-        res.status(500).send("Error interno del servidor"); 
+    // Buscar el usuario en la base de datos
+    const usuarioEncontrado = await UserModel.findOne({ usuario });
+    if (!usuarioEncontrado) {
+      console.log("Usuario no encontrado... Meu Deus... Basta ya...");
+      return res.status(401).send("Usuario no registrado.");
     }
-})
 
-//Logout
-router.post("/logout", (req, res) => {
-    res.clearCookie("coderCookieToken"); 
-    res.redirect("/login"); 
-})  
+    console.log("Usuario en la base de datos", usuarioEncontrado);
 
-//Current: 
+    // Verificar la contraseña
+    const esValida = isValidPassword(password, usuarioEncontrado);
+    console.log("Coincide la contraseña?", esValida);
 
-router.get("/current", passport.authenticate("current", {session: false}), (req, res) => {
-    res.render("home", {usuario: req.user.usuario}); 
-})
+    if (!esValida) {
+      return res.status(401).send("Contraseña incorrecta.");
+    }
+
+    // Generar un token JWT
+    const token = jsonwebtoken.sign(
+      { usuario: usuarioEncontrado.usuario, rol: usuarioEncontrado.rol },
+      "coderhouse",
+      { expiresIn: "1h" }
+    );
+    console.log("Token generado:", token);
+
+    // Guardar el token en una cookie
+    res.cookie("coderCookieToken", token, {
+      maxAge: 3600000,
+      httpOnly: true,
+    });
+
+    //Si procede exitosamente
+    res.status(200).send("Inicio de sesión exitoso.");
+  } catch (error) {
+    console.error("Error en login:", error);
+    res.status(500).send("Error interno del servidor.");
+  }
+});
+
+router.get("/logout", (req, res) => {
+    res.clearCookie("coderCookieToken");
+    res.redirect("/login");
+  });
+
+//Current:
+
+router.get(
+  "/current",
+  passport.authenticate("current", { session: false }),
+  (req, res) => {
+    res.render("home", { usuario: req.user.usuario });
+  }
+);
 
 //Admin
 
-router.get("/admin", passport.authenticate("current", {session:false}), (req, res) => {
-    if(req.user.rol !== "admin") {
-        return res.status(403).send("Acceso denegado!"); 
+router.get(
+  "/admin",
+  passport.authenticate("current", { session: false }),
+  (req, res) => {
+    if (req.user.rol !== "admin") {
+      return res.status(403).send("Acceso denegado! Aléjate malvado ladrón o Usuario que no tiene permiso de estar aquí... Shú! Shú!");
     }
 
-    res.render("admin"); 
-})
+    res.render("admin");
+  }
+);
+
+//Version para GitHub:
+
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
+
+// router.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/login" }), async (req, res) => {
+// La estrategia de Github nos retornará el usuario, entonces lo usamos para colocarlo en el objeto de session:
+// req.session.user = req.user;
+// req.session.login = true;
+// res.redirect("/profile");
+// })
+
+
+//Dejaré la depuración del código para poder guiarme mejor en lo que estoy haciendo, en esta parte tuve muchos problemas pero ya he logrado atinar a la solución.
+//Obviamente es intencional ver los datos que estoy usando porque ha sido una locura y hablo de manera literal solucionar esto jajajajajaja 
+
 
 module.exports = router;

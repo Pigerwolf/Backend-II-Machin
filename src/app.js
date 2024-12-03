@@ -13,6 +13,7 @@ const viewsRouter = require ("./routes/views.router.js");
 
 
 //Middleware
+app.get("/favicon.ico", (req, res) => res.status(204).end());
 app.use(express.json());
 app.use(express.urlencoded({extended: true})); 
 app.use(cookieParser());

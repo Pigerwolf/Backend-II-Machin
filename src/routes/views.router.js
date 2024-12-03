@@ -17,6 +17,10 @@ router.get("/admin", (req, res) => {
     res.render("admin"); 
 })
 
+router.get("/profile", (req, res) => {
+    res.render("profile"); 
+})
+
 router.get("/realtimeproducts", (req, res) => {
     res.render("realtimeproducts"); 
 })
