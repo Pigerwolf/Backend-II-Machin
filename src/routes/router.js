@@ -23,7 +23,7 @@ class Router {
             try {
                 await callback(req, res, next); 
             } catch (error) {
-                res.status(500).send("Error interno del servidor, vamos a sacarnos un 8"); 
+                res.status(500).send("Error interno del servidor, vamos a morirnos."); 
             }
         })
     }
