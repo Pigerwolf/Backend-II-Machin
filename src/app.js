@@ -29,12 +29,35 @@ app.set("views", "./src/views");
 
 //Rutas
 app.use("/api/sessions", usuarioRouter); 
-app.use("/", viewsRouter); 
+//app.use("/", viewsRouter); -------------------> Descomentar para ver "Inicio"
+app.get("/", async (req, res) => {
+    try {
+        const usuarios = await UserModel.find();
+        res.send(usuarios);
+        
+    } catch (error) {
+        res.status(500).send("Error catastrófico en el sistema.")
+    }
+})
 
 mongoose.connect(mongo_url)
     .then(() => console.log("Conexión exitosa"))
     .catch((error) => console.log("Llueve sólo sobre mis ventanas", error))
 
 app.listen(puerto, () => {
-    console.log(`Escuchando en el puerto ${puerto}`); 
+    console.log(`Escuchando en localhost:${puerto}`); 
+})
+
+//Listeners
+
+process.on("exit", (code) => {
+    console.log("Terminamos el proceso con este codigo: ", code)
+})
+
+//Este listener es importante para capturar errores en el código.
+
+process.on("uncaughtException", () => {
+    console.log("Tuvimos que capturar un error");
+    process.exitCode = 1;
+
 })
